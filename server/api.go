@@ -7,7 +7,8 @@ import (
 )
 
 func Routers(r *gin.Engine) {
-	public := r.Group("api/v1/")
+	public := r.Group("api/v1")
 
 	public.GET("/", controllers.LandingController)
+	public.POST("/register", controllers.Register)
 }
