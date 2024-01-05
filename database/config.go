@@ -15,10 +15,10 @@ var DB *gorm.DB
 func ConnectDB() {
 	// Initialize Database configuration names and set in Environment Variables
 	const (
-		host     = "127.0.0.1"
+		host     = "dpg-cmc4fk6n7f5s7396iru0-a"
 		port     = "5432"
-		user     = "postgres"
-		password = "commandme007!@~"
+		user     = "politicapp_db_user"
+		password = "44yTnogDdtKCJhaQv1dLcAlZKUOf26bT"
 		dbname   = "politicapp_db"
 	)
 
