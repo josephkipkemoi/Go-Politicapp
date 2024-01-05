@@ -9,25 +9,14 @@ import (
 	"gorm.io/gorm"
 )
 
+func init() {
+	setDBEnv()
+}
+
 var DB *gorm.DB
 
 // ConnectDB func will be called in main to initialize Database
 func ConnectDB() {
-	// Initialize Database configuration names and set in Environment Variables
-	const (
-		host     = "dpg-cmc4fk6n7f5s7396iru0-a"
-		port     = "5432"
-		user     = "politicapp_db_user"
-		password = "44yTnogDdtKCJhaQv1dLcAlZKUOf26bT"
-		dbname   = "politicapp_db"
-	)
-
-	os.Setenv("DB_HOST", host)
-	os.Setenv("DB_PORT", port)
-	os.Setenv("DB_USERNAME", user)
-	os.Setenv("DB_PASSWORD", password)
-	os.Setenv("DB_NAME", dbname)
-
 	// Get Environment variables to initialize Database
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
@@ -53,4 +42,23 @@ func ConnectDB() {
 		DB = Db
 	}
 
+}
+
+// setDBEnv func will set environent variables for local and production environmet
+// a more secure approach to be implemented later
+func setDBEnv() {
+	// Initialize Database configuration names and set in Environment Variables
+	const (
+		host     = "dpg-cmc4fk6n7f5s7396iru0-a"
+		port     = "5432"
+		user     = "politicapp_db_user"
+		password = "44yTnogDdtKCJhaQv1dLcAlZKUOf26bT"
+		dbname   = "politicapp_db"
+	)
+
+	os.Setenv("DB_HOST", host)
+	os.Setenv("DB_PORT", port)
+	os.Setenv("DB_USERNAME", user)
+	os.Setenv("DB_PASSWORD", password)
+	os.Setenv("DB_NAME", dbname)
 }
