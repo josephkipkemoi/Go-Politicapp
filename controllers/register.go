@@ -6,25 +6,28 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/josephkipkemoi/politicapp/database"
+	"github.com/josephkipkemoi/politicapp/utils"
 )
 
 type RegistrationInput struct {
-	FirstName       string
-	LastName        string
-	PhoneNumber     int
-	Password        string
-	ConfirmPassword string
+	FirstName       string `validate:"required"`
+	LastName        string `validate:"required"`
+	PhoneNumber     int    `validate:"required"`
+	Password        string `validate:"required"`
+	ConfirmPassword string `validate:"required"`
 }
-
-// var validate *validator.Validate
 
 func Register(c *gin.Context) {
 	input := &RegistrationInput{}
 
 	if err := c.ShouldBindJSON(input); err != nil {
-		c.JSON(http.StatusUnprocessableEntity, gin.H{
-			"error": err,
-		})
+		errs, ok := utils.ValidateRequest(err)
+		if !ok {
+			c.JSON(http.StatusUnprocessableEntity, gin.H{
+				"error": errs,
+			})
+			return
+		}
 	}
 	// Validate user input
 	ok, msg := validateInputPassword(input.Password, input.ConfirmPassword)
