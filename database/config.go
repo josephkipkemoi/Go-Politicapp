@@ -9,8 +9,11 @@ import (
 	"gorm.io/gorm"
 )
 
-// Initialize Database configuration names and set in Environment Variables
-func init() {
+var DB *gorm.DB
+
+// ConnectDB func will be called in main to initialize Database
+func ConnectDB() {
+	// Initialize Database configuration names and set in Environment Variables
 	const (
 		host     = "127.0.0.1"
 		port     = "5432"
@@ -24,12 +27,7 @@ func init() {
 	os.Setenv("DB_USERNAME", user)
 	os.Setenv("DB_PASSWORD", password)
 	os.Setenv("DB_NAME", dbname)
-}
 
-var DB *gorm.DB
-
-// ConnectDB func will be called in main to initialize Database
-func ConnectDB() {
 	// Get Environment variables to initialize Database
 	dbHost := os.Getenv("DB_HOST")
 	dbPort := os.Getenv("DB_PORT")
@@ -42,16 +40,17 @@ func ConnectDB() {
 		dbHost, dbPort, dbUserName, dbPassword, dbName)
 
 	Db, err := gorm.Open(postgres.Open(psqlInfo), &gorm.Config{})
+
 	if err != nil {
-		fmt.Println("Database connection error!")
+		log.Println("Database connection error!")
 		log.Fatalf("error message: %s", err)
 	} else {
-		fmt.Println("*******************************")
-		fmt.Println("Database connected sucessfully")
-		fmt.Println("*******************************")
+		log.Println("*******************************")
+		log.Println("Database connected sucessfully")
+		log.Println("*******************************")
+
+		Migration(Db)
+		DB = Db
 	}
 
-	Migration(Db)
-
-	DB = Db
 }

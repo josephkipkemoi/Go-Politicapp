@@ -8,11 +8,15 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"github.com/josephkipkemoi/politicapp/database"
 	"github.com/josephkipkemoi/politicapp/server"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestCanRegisterUser(t *testing.T) {
+	// Start Database
+	database.ConnectDB()
+	// Setup router
 	router := server.SetupRouter()
 
 	w := httptest.NewRecorder()

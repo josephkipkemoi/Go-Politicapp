@@ -9,7 +9,6 @@ func main() {
 	const port = ":8080"
 	// Connect to Postgresql Database
 	database.ConnectDB()
-
 	// Set up server
 	p := proxies()
 	r := server.SetupRouter()
